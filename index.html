@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>小图上传</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 860px;
+      margin: 40px auto;
+      padding: 0 16px;
+      line-height: 1.6;
+      color: #111;
+      background: #fff;
+    }
+    h1 { font-size: 28px; margin-bottom: 8px; }
+    form {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin: 14px 0 8px;
+    }
+    input[type="text"], textarea, input[type="file"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font: inherit;
+    }
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    button {
+      margin-top: 18px;
+      padding: 10px 18px;
+      border: 0;
+      border-radius: 10px;
+      background: #111;
+      color: #fff;
+      font: inherit;
+      cursor: pointer;
+    }
+    button[disabled] {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+    .result {
+      margin-top: 22px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 16px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #fafafa;
+      min-height: 120px;
+    }
+    .ok { color: #0a7a28; }
+    .err { color: #b00020; }
+  </style>
+</head>
+<body>
+  <h1>小图上传</h1>
+
+  <form id="uploadForm">
+    <label for="file">选择文件</label>
+    <input id="file" name="file" type="file" required />
+    
+    <label for="name">伪装文件名</label>
+    <input id="name" name="name" type="text" value="随便伪装的名.jpg" />
+
+    <label for="cookie">闲鱼创作平台 Cookie</label>
+    <textarea id="cookie" name="cookie" placeholder="粘贴完整 Cookie，仅本次请求使用"></textarea>
+
+    <button id="submitBtn" type="submit">开始上传</button>
+  </form>
+
+  <div id="status" class="hint" aria-live="polite"></div>
+  <div id="result" class="result">等待上传…</div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const statusEl = document.getElementById('status');
+    const resultEl = document.getElementById('result');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fileInput = document.getElementById('file');
+      const cookie = document.getElementById('cookie').value.trim();
+      const fakeName = document.getElementById('name').value.trim() || '随便伪装的名.jpg';
+
+      if (!fileInput.files || !fileInput.files[0]) {
+        resultEl.textContent = '请选择文件';
+        resultEl.className = 'result err';
+        return;
+      }
+
+      if (!cookie) {
+        resultEl.textContent = '请填写 Cookie';
+        resultEl.className = 'result err';
+        return;
+      }
+
+      const fd = new FormData();
+      fd.append('file', fileInput.files[0]);
+      fd.append('cookie', cookie);
+      fd.append('name', fakeName);
+
+      submitBtn.disabled = true;
+      statusEl.textContent = '上传中...';
+      resultEl.textContent = '';
+
+      try {
+        const resp = await fetch('/api/upload', {
+          method: 'POST',
+          body: fd,
+        });
+
+        const text = await resp.text();
+
+        statusEl.textContent = `HTTP ${resp.status}`;
+        resultEl.textContent = text;
+        resultEl.className = resp.ok ? 'result ok' : 'result err';
+      } catch (err) {
+        statusEl.textContent = '请求失败';
+        resultEl.textContent = err?.message || String(err);
+        resultEl.className = 'result err';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
