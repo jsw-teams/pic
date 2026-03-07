@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'; // 引入 UUID 生成库
-
 const TARGET_URL =
   'https://stream-upload.goofish.com/api/upload.api?_input_charset=utf-8&appkey=fleamarket';
 
@@ -55,10 +53,7 @@ export async function onRequestPost(context) {
 
     const file = form.get('file');
     const inputCookie = String(form.get('cookie') || '').trim();
-    const fakeName = String(form.get('name') || '生活照.jpg').trim();
-
-    // 使用 UUID 生成唯一的文件名
-    const uniqueFileName = `${fakeName.replace(/\.[^/.]+$/, '')}-${uuidv4()}.jpg`;
+    const fakeName = String(form.get('name') || '随便伪装的名.jpg').trim();
 
     if (!(file instanceof File)) {
       return json(
@@ -86,8 +81,8 @@ export async function onRequestPost(context) {
     }
 
     const upstreamForm = new FormData();
-    upstreamForm.append('file', file, file.name || uniqueFileName);
-    upstreamForm.append('name', uniqueFileName);
+    upstreamForm.append('file', file, file.name || 'upload.bin');
+    upstreamForm.append('name', fakeName || '生活照.jpg');
     upstreamForm.append('folderId', '0');
     upstreamForm.append('appkey', 'fleamarket');
 
@@ -101,6 +96,7 @@ export async function onRequestPost(context) {
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
     );
 
+    // 不要手动设置 multipart/form-data 的 Content-Type boundary
     const upstreamResp = await fetch(TARGET_URL, {
       method: 'POST',
       headers: upstreamHeaders,
