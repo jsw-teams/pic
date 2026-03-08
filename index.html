@@ -14,22 +14,16 @@
   <meta name="theme-color" content="#0f172a" />
   <link rel="canonical" href="https://pic.jsw.ac.cn/" />
 
-  <!-- 你设计好 ICO 后启用 -->
   <link rel="icon" href="/favicon.ico" sizes="any" />
-  <!-- 如有 PNG/SVG 图标可继续补充 -->
-  <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
-  <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png" /> -->
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="图片上传" />
+  <meta property="og:title" content="小图上传" />
   <meta
     property="og:description"
     content="支持图片上传、直链获取与 Markdown 插入格式复制。"
   />
-  <meta property="og:url" content="https://你的域名/" />
+  <meta property="og:url" content="https://pic.jsw.ac.cn/" />
   <meta property="og:site_name" content="小图上传" />
-  <!-- 你后续可替换为自定义分享图 -->
-  <!-- <meta property="og:image" content="https://你的域名/og.png" /> -->
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="小图上传" />
@@ -42,7 +36,7 @@
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "图片上传",
+    "name": "小图上传",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "description": "支持图片上传、直链获取与 Markdown 插入格式复制。",
@@ -57,7 +51,7 @@
   <div class="app-shell">
     <header class="topbar">
       <div class="brand">
-        <h1 id="pageTitle">上传图片</h1>
+        <h1 id="pageTitle">小图上传</h1>
       </div>
 
       <div class="topbar-actions">
@@ -72,8 +66,8 @@
       </div>
     </header>
 
-    <main class="layout">
-      <section class="panel form-panel" aria-labelledby="uploadHeading">
+    <main class="single-panel-wrap">
+      <section class="panel single-panel" aria-labelledby="uploadHeading">
         <div class="panel-header">
           <h2 id="uploadHeading">上传</h2>
         </div>
@@ -107,12 +101,26 @@
             <textarea
               id="cookieInput"
               name="cookie"
-              rows="6"
+              rows="7"
               spellcheck="false"
               autocomplete="off"
-              aria-describedby="cookieHint"
+              aria-describedby="cookieHint cookieHelp"
             ></textarea>
-            <p id="cookieHint" class="field-hint">可本地保存</p>
+
+            <p id="cookieHint" class="field-hint">
+              请输入闲鱼创作平台登录后的完整 Cookie。该内容仅用于本次上传请求；勾选“记住”后会保存在当前浏览器本地。
+            </p>
+
+            <p id="cookieHelp" class="field-hint">
+              如果你不知道如何获取 Cookie，请先阅读
+              <a
+                id="cookieGuideLink"
+                class="inline-link"
+                href="https://example.com/how-to-get-cookie"
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+              >这篇文章</a>。
+            </p>
           </div>
 
           <div class="inline-actions">
@@ -141,41 +149,62 @@
           <div id="statusBar" class="status-bar" role="status" aria-live="polite"></div>
         </form>
       </section>
-
-      <section class="panel result-panel" aria-labelledby="resultHeading">
-        <div class="panel-header">
-          <h2 id="resultHeading">结果</h2>
-        </div>
-
-        <div id="emptyState" class="empty-state">暂无结果</div>
-
-        <div id="resultCard" hidden>
-          <div class="result-preview-wrap">
-            <img id="resultImage" alt="" hidden />
-          </div>
-
-          <div class="result-group">
-            <label for="imageUrlOutput" id="urlLabel">直链</label>
-            <textarea id="imageUrlOutput" rows="3" readonly></textarea>
-            <button type="button" class="btn btn-secondary copy-btn" data-copy-target="imageUrlOutput" id="copyUrlBtn">
-              复制直链
-            </button>
-          </div>
-
-          <div class="result-group">
-            <label for="markdownOutput" id="mdLabel">Markdown</label>
-            <textarea id="markdownOutput" rows="3" readonly></textarea>
-            <button type="button" class="btn btn-secondary copy-btn" data-copy-target="markdownOutput" id="copyMdBtn">
-              复制 Markdown
-            </button>
-          </div>
-
-          <a id="openImageLink" class="link-btn" href="#" target="_blank" rel="noopener noreferrer">
-            打开图片
-          </a>
-        </div>
-      </section>
     </main>
+  </div>
+
+  <div
+    id="resultModal"
+    class="modal"
+    hidden
+    aria-hidden="true"
+  >
+    <div id="modalBackdrop" class="modal-backdrop"></div>
+
+    <section
+      class="modal-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="resultHeading"
+      aria-describedby="resultDesc"
+    >
+      <div class="modal-header">
+        <h2 id="resultHeading">上传结果</h2>
+        <button id="closeModalBtn" type="button" class="icon-btn" aria-label="关闭">×</button>
+      </div>
+
+      <p id="resultDesc" class="modal-desc">上传成功后，这里会显示图片直链和 Markdown。</p>
+
+      <div class="result-preview-wrap modal-preview-wrap">
+        <img id="resultImage" alt="" hidden />
+      </div>
+
+      <div class="result-group">
+        <label for="imageUrlOutput" id="urlLabel">直链</label>
+        <textarea id="imageUrlOutput" rows="3" readonly></textarea>
+        <button type="button" class="btn btn-secondary copy-btn" data-copy-target="imageUrlOutput" id="copyUrlBtn">
+          复制直链
+        </button>
+      </div>
+
+      <div class="result-group">
+        <label for="markdownOutput" id="mdLabel">Markdown</label>
+        <textarea id="markdownOutput" rows="3" readonly></textarea>
+        <button type="button" class="btn btn-secondary copy-btn" data-copy-target="markdownOutput" id="copyMdBtn">
+          复制 Markdown
+        </button>
+      </div>
+
+      <div class="modal-actions">
+        <a
+          id="openImageLink"
+          class="btn btn-secondary"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >打开图片</a>
+        <button id="closeModalBtnBottom" type="button" class="btn btn-primary">完成</button>
+      </div>
+    </section>
   </div>
 
   <script>

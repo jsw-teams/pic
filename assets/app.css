@@ -1,18 +1,17 @@
 :root {
-  --bg: #0b1020;
-  --panel: rgba(255, 255, 255, 0.08);
-  --panel-solid: #ffffff;
+  --bg: #f3f6fb;
+  --panel: rgba(255, 255, 255, 0.84);
   --text: #0f172a;
   --text-soft: #475569;
   --line: rgba(148, 163, 184, 0.28);
-  --shadow: 0 20px 60px rgba(15, 23, 42, 0.16);
+  --shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
   --primary: #111827;
   --primary-contrast: #ffffff;
   --secondary: #f8fafc;
   --danger: #b91c1c;
   --ok: #166534;
   --focus: #2563eb;
-  --card-radius: 24px;
+  --card-radius: 28px;
 }
 
 * {
@@ -29,8 +28,8 @@ body {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 32%),
-    radial-gradient(circle at top right, rgba(99, 102, 241, 0.12), transparent 26%),
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.10), transparent 28%),
+    radial-gradient(circle at top right, rgba(99, 102, 241, 0.08), transparent 24%),
     linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
 }
 
@@ -46,46 +45,33 @@ select {
   font: inherit;
 }
 
-textarea,
-input[type="file"],
-select,
-button {
-  border-radius: 16px;
-}
-
-button,
-select,
-input,
-textarea {
-  outline: none;
-}
-
 button:focus-visible,
 select:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 a:focus-visible {
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18);
+  outline: none;
 }
 
 .app-shell {
-  max-width: 1240px;
+  max-width: 980px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 28px 18px 48px;
 }
 
 .topbar {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .brand h1 {
   margin: 0;
-  font-size: clamp(1.6rem, 2vw, 2.15rem);
-  letter-spacing: -0.02em;
+  font-size: clamp(1.9rem, 2.6vw, 2.7rem);
+  letter-spacing: -0.03em;
 }
 
 .topbar-actions {
@@ -102,16 +88,15 @@ a:focus-visible {
 }
 
 .lang-field select {
-  min-width: 144px;
+  min-width: 150px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.72);
-  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.78);
+  padding: 11px 14px;
+  border-radius: 16px;
 }
 
-.layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-  gap: 24px;
+.single-panel-wrap {
+  display: block;
 }
 
 .panel {
@@ -120,7 +105,11 @@ a:focus-visible {
   border: 1px solid rgba(255, 255, 255, 0.7);
   box-shadow: var(--shadow);
   border-radius: var(--card-radius);
-  padding: 24px;
+  padding: 26px;
+}
+
+.single-panel {
+  max-width: 100%;
 }
 
 .panel-header {
@@ -129,7 +118,7 @@ a:focus-visible {
 
 .panel-header h2 {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
 }
 
 .field {
@@ -145,7 +134,17 @@ a:focus-visible {
 .field-hint {
   margin: 10px 0 0;
   color: var(--text-soft);
-  font-size: 0.93rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.inline-link {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.inline-link:hover {
+  text-decoration: underline;
 }
 
 input[type="file"],
@@ -153,22 +152,23 @@ textarea,
 select {
   width: 100%;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--text);
   padding: 14px 16px;
+  border-radius: 18px;
 }
 
 textarea {
   resize: vertical;
-  line-height: 1.55;
-  min-height: 132px;
+  line-height: 1.6;
+  min-height: 144px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 .preview-card {
   border: 1px dashed rgba(148, 163, 184, 0.5);
   border-radius: 20px;
-  background: rgba(248, 250, 252, 0.78);
+  background: rgba(248, 250, 252, 0.82);
   padding: 16px;
   margin-bottom: 18px;
 }
@@ -199,7 +199,7 @@ textarea {
 
 .preview-media-wrap img {
   width: 100%;
-  max-height: 360px;
+  max-height: 420px;
   object-fit: contain;
   background: #f8fafc;
 }
@@ -233,11 +233,11 @@ textarea {
 }
 
 .submit-row {
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
 .btn,
-.link-btn {
+.icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -247,10 +247,11 @@ textarea {
   cursor: pointer;
   text-decoration: none;
   transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+  border-radius: 16px;
 }
 
 .btn:hover,
-.link-btn:hover {
+.icon-btn:hover {
   transform: translateY(-1px);
 }
 
@@ -271,14 +272,6 @@ textarea {
   color: var(--text);
 }
 
-.link-btn {
-  background: var(--secondary);
-  border-color: var(--line);
-  color: var(--text);
-  width: 100%;
-  margin-top: 12px;
-}
-
 .status-bar {
   margin-top: 16px;
   min-height: 24px;
@@ -293,13 +286,6 @@ textarea {
   color: var(--danger);
 }
 
-.empty-state {
-  color: var(--text-soft);
-  border: 1px dashed rgba(148, 163, 184, 0.45);
-  border-radius: 20px;
-  padding: 20px;
-}
-
 .result-preview-wrap {
   border-radius: 18px;
   overflow: hidden;
@@ -310,7 +296,7 @@ textarea {
 
 .result-preview-wrap img {
   width: 100%;
-  max-height: 420px;
+  max-height: 360px;
   object-fit: contain;
 }
 
@@ -329,25 +315,93 @@ textarea {
   margin-top: 10px;
 }
 
-@media (max-width: 920px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
 }
 
-@media (max-width: 640px) {
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.48);
+  backdrop-filter: blur(6px);
+}
+
+.modal-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(720px, calc(100vw - 28px));
+  max-height: calc(100vh - 28px);
+  overflow: auto;
+  margin: 14px auto;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 24px;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.28);
+  padding: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.modal-desc {
+  margin: 0 0 16px;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+.modal-preview-wrap {
+  min-height: 120px;
+}
+
+.modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.icon-btn {
+  width: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  padding: 0;
+  background: var(--secondary);
+  border-color: var(--line);
+  color: var(--text);
+  font-size: 24px;
+  line-height: 1;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 720px) {
   .app-shell {
-    padding: 14px;
+    padding: 16px 14px 36px;
   }
 
   .panel {
     padding: 18px;
-    border-radius: 20px;
+    border-radius: 22px;
   }
 
   .topbar {
-    align-items: flex-start;
     flex-direction: column;
+    align-items: stretch;
   }
 
   .topbar-actions,
@@ -364,19 +418,25 @@ textarea {
     width: 180px;
   }
 
-  .inline-actions {
-    align-items: stretch;
+  .inline-actions,
+  .modal-actions {
+    grid-template-columns: 1fr;
   }
 
-  .btn,
-  .link-btn {
+  .btn {
     width: 100%;
+  }
+
+  .modal-dialog {
+    width: calc(100vw - 20px);
+    margin: 10px auto;
+    padding: 18px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .btn,
-  .link-btn {
+  .icon-btn {
     transition: none;
   }
 }

@@ -6,127 +6,141 @@ const STORAGE_KEYS = {
 
 const DEFAULT_MAX_BYTES = 5.5 * 1024 * 1024;
 
+const COOKIE_GUIDE_URL = 'https://www.jsw.ac.cn/pic';
+
 const I18N = {
-'zh-Hans': {
-  pageTitle: '上传图片',
-  langLabel: '语言',
-  uploadHeading: '上传',
-  fileLabel: '图片',
-  fileHint: '单张，小于 5.5 MB',
-  emptyPreviewName: '未选择',
-  cookieLabel: 'Cookie',
-  cookieHint: '可本地保存',
-  rememberLabel: '记住',
-  clearCookieBtn: '清除',
-  verifyLabel: '验证',
-  verifyHintIdle: '完成后可上传',
-  verifyHintReady: '验证通过',
-  verifyHintExpired: '验证已失效',
-  verifyHintError: '验证加载失败',
-  submitBtn: '上传图片',
-  resultHeading: '结果',
-  emptyState: '暂无结果',
-  urlLabel: '直链',
-  mdLabel: 'Markdown',
-  copyUrlBtn: '复制直链',
-  copyMdBtn: '复制 Markdown',
-  openImageLink: '打开图片',
-  pickImage: '请选择图片。',
-  imageOnly: '仅支持图片文件。',
-  sizeExceeded: '图片过大。',
-  cookieRequired: '请填写 Cookie。',
-  verifyRequired: '请先完成验证。',
-  uploading: '上传中...',
-  uploadOk: '上传成功。',
-  uploadFail: '上传失败。',
-  configFail: '初始化失败。',
-  cookieSaved: '已保存。',
-  cookieCleared: '已清除。',
-  copyOk: '已复制。',
-  copyFail: '复制失败。',
-  noResultUrl: '未解析到直链。',
-  resultImageAlt: '图片预览',
-},
-'zh-Hant': {
-  pageTitle: '上傳圖片',
-  langLabel: '語言',
-  uploadHeading: '上傳',
-  fileLabel: '圖片',
-  fileHint: '單張，小於 5.5 MB',
-  emptyPreviewName: '未選擇',
-  cookieLabel: 'Cookie',
-  cookieHint: '可本地保存',
-  rememberLabel: '記住',
-  clearCookieBtn: '清除',
-  verifyLabel: '驗證',
-  verifyHintIdle: '完成後可上傳',
-  verifyHintReady: '驗證通過',
-  verifyHintExpired: '驗證已失效',
-  verifyHintError: '驗證載入失敗',
-  submitBtn: '上傳圖片',
-  resultHeading: '結果',
-  emptyState: '暫無結果',
-  urlLabel: '直鏈',
-  mdLabel: 'Markdown',
-  copyUrlBtn: '複製直鏈',
-  copyMdBtn: '複製 Markdown',
-  openImageLink: '打開圖片',
-  pickImage: '請選擇圖片。',
-  imageOnly: '僅支援圖片檔案。',
-  sizeExceeded: '圖片過大。',
-  cookieRequired: '請填寫 Cookie。',
-  verifyRequired: '請先完成驗證。',
-  uploading: '上傳中...',
-  uploadOk: '上傳成功。',
-  uploadFail: '上傳失敗。',
-  configFail: '初始化失敗。',
-  cookieSaved: '已保存。',
-  cookieCleared: '已清除。',
-  copyOk: '已複製。',
-  copyFail: '複製失敗。',
-  noResultUrl: '未解析到直鏈。',
-  resultImageAlt: '圖片預覽',
-},
-en: {
-  pageTitle: 'Image Upload',
-  langLabel: 'Language',
-  uploadHeading: 'Upload',
-  fileLabel: 'Image',
-  fileHint: 'Single image, under 5.5 MB',
-  emptyPreviewName: 'Not selected',
-  cookieLabel: 'Cookie',
-  cookieHint: 'Can be saved locally',
-  rememberLabel: 'Remember',
-  clearCookieBtn: 'Clear',
-  verifyLabel: 'Verify',
-  verifyHintIdle: 'Complete verification to upload',
-  verifyHintReady: 'Verified',
-  verifyHintExpired: 'Verification expired',
-  verifyHintError: 'Verification failed to load',
-  submitBtn: 'Upload Image',
-  resultHeading: 'Result',
-  emptyState: 'No result yet',
-  urlLabel: 'Direct URL',
-  mdLabel: 'Markdown',
-  copyUrlBtn: 'Copy URL',
-  copyMdBtn: 'Copy Markdown',
-  openImageLink: 'Open Image',
-  pickImage: 'Please choose an image.',
-  imageOnly: 'Images only.',
-  sizeExceeded: 'Image is too large.',
-  cookieRequired: 'Please enter the Cookie.',
-  verifyRequired: 'Please complete verification.',
-  uploading: 'Uploading...',
-  uploadOk: 'Upload completed.',
-  uploadFail: 'Upload failed.',
-  configFail: 'Initialization failed.',
-  cookieSaved: 'Saved.',
-  cookieCleared: 'Cleared.',
-  copyOk: 'Copied.',
-  copyFail: 'Copy failed.',
-  noResultUrl: 'No direct URL parsed.',
-  resultImageAlt: 'Image preview',
-},
+  'zh-Hans': {
+    pageTitle: '图片上传',
+    langLabel: '语言',
+    uploadHeading: '上传',
+    fileLabel: '图片',
+    fileHint: '单张，小于 5.5 MB',
+    emptyPreviewName: '未选择',
+    cookieLabel: 'Cookie',
+    cookieHint: '请输入闲鱼创作平台登录后的完整 Cookie。该内容仅用于本次上传请求；勾选“记住”后会保存在当前浏览器本地。',
+    cookieHelpPrefix: '如果你不知道如何获取 Cookie，请先阅读',
+    cookieHelpLink: '这篇文章',
+    cookieHelpSuffix: '。',
+    rememberLabel: '记住',
+    clearCookieBtn: '清除',
+    verifyLabel: '验证',
+    verifyHintIdle: '完成后可上传',
+    verifyHintReady: '验证通过',
+    verifyHintExpired: '验证已失效',
+    verifyHintError: '验证加载失败',
+    submitBtn: '上传图片',
+    resultHeading: '上传结果',
+    resultDesc: '上传成功后，这里会显示图片直链和 Markdown。',
+    urlLabel: '直链',
+    mdLabel: 'Markdown',
+    copyUrlBtn: '复制直链',
+    copyMdBtn: '复制 Markdown',
+    openImageLink: '打开图片',
+    closeModal: '完成',
+    pickImage: '请选择图片。',
+    imageOnly: '仅支持图片文件。',
+    sizeExceeded: '图片过大。',
+    cookieRequired: '请填写 Cookie。',
+    verifyRequired: '请先完成验证。',
+    uploading: '上传中...',
+    uploadOk: '上传成功。',
+    uploadFail: '上传失败。',
+    configFail: '初始化失败。',
+    cookieSaved: '已保存。',
+    cookieCleared: '已清除。',
+    copyOk: '已复制。',
+    copyFail: '复制失败。',
+    noResultUrl: '未解析到直链。',
+    resultImageAlt: '图片预览',
+  },
+  'zh-Hant': {
+    pageTitle: '圖片上傳',
+    langLabel: '語言',
+    uploadHeading: '上傳',
+    fileLabel: '圖片',
+    fileHint: '單張，小於 5.5 MB',
+    emptyPreviewName: '未選擇',
+    cookieLabel: 'Cookie',
+    cookieHint: '請輸入閒魚創作平台登入後的完整 Cookie。該內容僅用於本次上傳請求；勾選「記住」後會保存在目前瀏覽器本地。',
+    cookieHelpPrefix: '如果你不知道如何取得 Cookie，請先閱讀',
+    cookieHelpLink: '這篇文章',
+    cookieHelpSuffix: '。',
+    rememberLabel: '記住',
+    clearCookieBtn: '清除',
+    verifyLabel: '驗證',
+    verifyHintIdle: '完成後可上傳',
+    verifyHintReady: '驗證通過',
+    verifyHintExpired: '驗證已失效',
+    verifyHintError: '驗證載入失敗',
+    submitBtn: '上傳圖片',
+    resultHeading: '上傳結果',
+    resultDesc: '上傳成功後，這裡會顯示圖片直鏈和 Markdown。',
+    urlLabel: '直鏈',
+    mdLabel: 'Markdown',
+    copyUrlBtn: '複製直鏈',
+    copyMdBtn: '複製 Markdown',
+    openImageLink: '打開圖片',
+    closeModal: '完成',
+    pickImage: '請選擇圖片。',
+    imageOnly: '僅支援圖片檔案。',
+    sizeExceeded: '圖片過大。',
+    cookieRequired: '請填寫 Cookie。',
+    verifyRequired: '請先完成驗證。',
+    uploading: '上傳中...',
+    uploadOk: '上傳成功。',
+    uploadFail: '上傳失敗。',
+    configFail: '初始化失敗。',
+    cookieSaved: '已保存。',
+    cookieCleared: '已清除。',
+    copyOk: '已複製。',
+    copyFail: '複製失敗。',
+    noResultUrl: '未解析到直鏈。',
+    resultImageAlt: '圖片預覽',
+  },
+  en: {
+    pageTitle: 'Image Upload',
+    langLabel: 'Language',
+    uploadHeading: 'Upload',
+    fileLabel: 'Image',
+    fileHint: 'Single image, under 5.5 MB',
+    emptyPreviewName: 'Not selected',
+    cookieLabel: 'Cookie',
+    cookieHint: 'Enter the full Cookie from the logged-in Goofish creator platform. It is used only for this upload request; if you enable “Remember”, it will be stored locally in this browser.',
+    cookieHelpPrefix: 'If you do not know how to get the Cookie, read',
+    cookieHelpLink: 'this article',
+    cookieHelpSuffix: '.',
+    rememberLabel: 'Remember',
+    clearCookieBtn: 'Clear',
+    verifyLabel: 'Verify',
+    verifyHintIdle: 'Complete verification to upload',
+    verifyHintReady: 'Verified',
+    verifyHintExpired: 'Verification expired',
+    verifyHintError: 'Verification failed to load',
+    submitBtn: 'Upload Image',
+    resultHeading: 'Upload Result',
+    resultDesc: 'After a successful upload, the direct image URL and Markdown will appear here.',
+    urlLabel: 'Direct URL',
+    mdLabel: 'Markdown',
+    copyUrlBtn: 'Copy URL',
+    copyMdBtn: 'Copy Markdown',
+    openImageLink: 'Open Image',
+    closeModal: 'Done',
+    pickImage: 'Please choose an image.',
+    imageOnly: 'Images only.',
+    sizeExceeded: 'Image is too large.',
+    cookieRequired: 'Please enter the Cookie.',
+    verifyRequired: 'Please complete verification.',
+    uploading: 'Uploading...',
+    uploadOk: 'Upload completed.',
+    uploadFail: 'Upload failed.',
+    configFail: 'Initialization failed.',
+    cookieSaved: 'Saved.',
+    cookieCleared: 'Cleared.',
+    copyOk: 'Copied.',
+    copyFail: 'Copy failed.',
+    noResultUrl: 'No direct URL parsed.',
+    resultImageAlt: 'Image preview',
+  },
 };
 
 const state = {
@@ -135,6 +149,7 @@ const state = {
   turnstileWidgetId: null,
   turnstileToken: '',
   maxUploadBytes: DEFAULT_MAX_BYTES,
+  lastFocusedElement: null,
 };
 
 const el = {};
@@ -176,6 +191,8 @@ function bindElements() {
   el.cookieLabel = document.getElementById('cookieLabel');
   el.cookieInput = document.getElementById('cookieInput');
   el.cookieHint = document.getElementById('cookieHint');
+  el.cookieHelp = document.getElementById('cookieHelp');
+  el.cookieGuideLink = document.getElementById('cookieGuideLink');
   el.rememberCookie = document.getElementById('rememberCookie');
   el.rememberLabel = document.getElementById('rememberLabel');
   el.clearCookieBtn = document.getElementById('clearCookieBtn');
@@ -187,9 +204,12 @@ function bindElements() {
   el.submitBtn = document.getElementById('submitBtn');
   el.statusBar = document.getElementById('statusBar');
 
+  el.resultModal = document.getElementById('resultModal');
+  el.modalBackdrop = document.getElementById('modalBackdrop');
+  el.closeModalBtn = document.getElementById('closeModalBtn');
+  el.closeModalBtnBottom = document.getElementById('closeModalBtnBottom');
   el.resultHeading = document.getElementById('resultHeading');
-  el.emptyState = document.getElementById('emptyState');
-  el.resultCard = document.getElementById('resultCard');
+  el.resultDesc = document.getElementById('resultDesc');
   el.resultImage = document.getElementById('resultImage');
   el.urlLabel = document.getElementById('urlLabel');
   el.imageUrlOutput = document.getElementById('imageUrlOutput');
@@ -244,6 +264,16 @@ function bindEvents() {
         setStatus(t('copyFail'), 'err');
       }
     });
+  });
+
+  el.modalBackdrop.addEventListener('click', closeModal);
+  el.closeModalBtn.addEventListener('click', closeModal);
+  el.closeModalBtnBottom.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !el.resultModal.hidden) {
+      closeModal();
+    }
   });
 }
 
@@ -362,9 +392,10 @@ async function handleSubmit(event) {
     }
 
     showResult(data);
+    openModal();
     setStatus(t('uploadOk'), 'ok');
   } catch (err) {
-    hideResult();
+    closeModal(true);
     setStatus(err?.message || t('uploadFail'), 'err');
   } finally {
     state.turnstileToken = '';
@@ -382,9 +413,6 @@ function showResult(data) {
   const markdown = data.markdown || '';
   const alt = t('resultImageAlt');
 
-  el.emptyState.hidden = true;
-  el.resultCard.hidden = false;
-
   el.imageUrlOutput.value = imageUrl;
   el.markdownOutput.value = markdown;
   el.openImageLink.href = imageUrl || '#';
@@ -395,17 +423,29 @@ function showResult(data) {
     el.resultImage.hidden = false;
   } else {
     el.resultImage.hidden = true;
+    el.resultImage.removeAttribute('src');
   }
 }
 
-function hideResult() {
-  el.emptyState.hidden = false;
-  el.resultCard.hidden = true;
-  el.imageUrlOutput.value = '';
-  el.markdownOutput.value = '';
-  el.openImageLink.href = '#';
-  el.resultImage.hidden = true;
-  el.resultImage.removeAttribute('src');
+function openModal() {
+  state.lastFocusedElement = document.activeElement;
+  el.resultModal.hidden = false;
+  el.resultModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => {
+    el.closeModalBtn.focus();
+  }, 0);
+}
+
+function closeModal(silent = false) {
+  if (el.resultModal.hidden) return;
+  el.resultModal.hidden = true;
+  el.resultModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+
+  if (!silent && state.lastFocusedElement && typeof state.lastFocusedElement.focus === 'function') {
+    state.lastFocusedElement.focus();
+  }
 }
 
 function updatePreview() {
@@ -446,9 +486,9 @@ function updateSubmitState() {
 function updateFileHint() {
   const mb = (state.maxUploadBytes / 1024 / 1024).toFixed(1);
   const map = {
-    'zh-Hans': `仅支持单张图片，小于 ${mb} MB。`,
-    'zh-Hant': `僅支援單張圖片，小於 ${mb} MB。`,
-    en: `Single image only, under ${mb} MB.`,
+    'zh-Hans': `单张，小于 ${mb} MB`,
+    'zh-Hant': `單張，小於 ${mb} MB`,
+    en: `Single image, under ${mb} MB`,
   };
   el.fileHint.textContent = map[state.lang] || map['zh-Hans'];
 }
@@ -473,6 +513,12 @@ function applyI18n() {
 
   el.cookieLabel.textContent = t('cookieLabel');
   el.cookieHint.textContent = t('cookieHint');
+  el.cookieGuideLink.href = COOKIE_GUIDE_URL;
+  el.cookieGuideLink.textContent = t('cookieHelpLink');
+  el.cookieHelp.innerHTML = `${escapeHtml(t('cookieHelpPrefix'))} <a id="cookieGuideLinkInline" class="inline-link" href="${COOKIE_GUIDE_URL}" target="_blank" rel="noopener noreferrer nofollow">${escapeHtml(t('cookieHelpLink'))}</a>${escapeHtml(t('cookieHelpSuffix'))}`;
+  const inlineLink = document.getElementById('cookieGuideLinkInline');
+  if (inlineLink) inlineLink.setAttribute('aria-label', t('cookieHelpLink'));
+
   el.rememberLabel.textContent = t('rememberLabel');
   el.clearCookieBtn.textContent = t('clearCookieBtn');
 
@@ -484,12 +530,13 @@ function applyI18n() {
   el.submitBtn.textContent = t('submitBtn');
 
   el.resultHeading.textContent = t('resultHeading');
-  el.emptyState.textContent = t('emptyState');
+  el.resultDesc.textContent = t('resultDesc');
   el.urlLabel.textContent = t('urlLabel');
   el.mdLabel.textContent = t('mdLabel');
   el.copyUrlBtn.textContent = t('copyUrlBtn');
   el.copyMdBtn.textContent = t('copyMdBtn');
   el.openImageLink.textContent = t('openImageLink');
+  el.closeModalBtnBottom.textContent = t('closeModal');
 
   if (!el.fileInput.files?.[0]) {
     el.previewName.textContent = t('emptyPreviewName');
@@ -561,4 +608,13 @@ function formatBytes(bytes) {
     index += 1;
   }
   return `${value.toFixed(value >= 10 || index === 0 ? 0 : 1)} ${units[index]}`;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
 }
