@@ -3,141 +3,192 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>小图上传</title>
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      max-width: 860px;
-      margin: 40px auto;
-      padding: 0 16px;
-      line-height: 1.6;
-      color: #111;
-      background: #fff;
-    }
-    h1 { font-size: 28px; margin-bottom: 8px; }
-    form {
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 20px;
-    }
-    label {
-      display: block;
-      font-weight: 600;
-      margin: 14px 0 8px;
-    }
-    input[type="text"], textarea, input[type="file"] {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 10px 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font: inherit;
-    }
-    textarea {
-      min-height: 140px;
-      resize: vertical;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    }
-    button {
-      margin-top: 18px;
-      padding: 10px 18px;
-      border: 0;
-      border-radius: 10px;
-      background: #111;
-      color: #fff;
-      font: inherit;
-      cursor: pointer;
-    }
-    button[disabled] {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-    .result {
-      margin-top: 22px;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 16px;
-      white-space: pre-wrap;
-      word-break: break-word;
-      background: #fafafa;
-      min-height: 120px;
-    }
-    .ok { color: #0a7a28; }
-    .err { color: #b00020; }
-  </style>
+  <meta name="color-scheme" content="light dark" />
+  <title>我的图床</title>
+
+  <meta
+    name="description"
+    content="小图上传工具，支持图片上传、直链获取与 Markdown 插入格式复制。"
+  />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="canonical" href="https://pic.jsw.ac.cn/" />
+
+  <!-- 你设计好 ICO 后启用 -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <!-- 如有 PNG/SVG 图标可继续补充 -->
+  <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+  <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png" /> -->
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="图片上传" />
+  <meta
+    property="og:description"
+    content="支持图片上传、直链获取与 Markdown 插入格式复制。"
+  />
+  <meta property="og:url" content="https://你的域名/" />
+  <meta property="og:site_name" content="小图上传" />
+  <!-- 你后续可替换为自定义分享图 -->
+  <!-- <meta property="og:image" content="https://你的域名/og.png" /> -->
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="小图上传" />
+  <meta
+    name="twitter:description"
+    content="支持图片上传、直链获取与 Markdown 插入格式复制。"
+  />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "图片上传",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "description": "支持图片上传、直链获取与 Markdown 插入格式复制。",
+    "url": "https://pic.jsw.ac.cn/"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://challenges.cloudflare.com" />
+  <link rel="stylesheet" href="/assets/app.css" />
 </head>
 <body>
-  <h1>小图上传</h1>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <h1 id="pageTitle">上传图片</h1>
+      </div>
 
-  <form id="uploadForm">
-    <label for="file">选择文件</label>
-    <input id="file" name="file" type="file" required />
-    
-    <label for="name">伪装文件名</label>
-    <input id="name" name="name" type="text" value="随便伪装的名.jpg" />
+      <div class="topbar-actions">
+        <label class="lang-field" for="langSelect">
+          <span id="langLabel">语言</span>
+          <select id="langSelect" aria-label="Language">
+            <option value="zh-Hans">简体中文</option>
+            <option value="zh-Hant">繁體中文</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+      </div>
+    </header>
 
-    <label for="cookie">闲鱼创作平台 Cookie</label>
-    <textarea id="cookie" name="cookie" placeholder="粘贴完整 Cookie，仅本次请求使用"></textarea>
+    <main class="layout">
+      <section class="panel form-panel" aria-labelledby="uploadHeading">
+        <div class="panel-header">
+          <h2 id="uploadHeading">上传</h2>
+        </div>
 
-    <button id="submitBtn" type="submit">开始上传</button>
-  </form>
+        <form id="uploadForm" novalidate>
+          <div class="field">
+            <label for="fileInput" id="fileLabel">图片</label>
+            <input
+              id="fileInput"
+              name="file"
+              type="file"
+              accept="image/*"
+              required
+              aria-describedby="fileHint"
+            />
+            <p id="fileHint" class="field-hint">单张，小于 5.5 MB</p>
+          </div>
 
-  <div id="status" class="hint" aria-live="polite"></div>
-  <div id="result" class="result">等待上传…</div>
+          <div id="previewCard" class="preview-card empty" aria-live="polite">
+            <div class="preview-meta">
+              <strong id="previewName">未选择</strong>
+              <span id="previewSize">-</span>
+            </div>
+            <div class="preview-media-wrap">
+              <img id="previewImage" alt="" hidden />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="cookieInput" id="cookieLabel">Cookie</label>
+            <textarea
+              id="cookieInput"
+              name="cookie"
+              rows="6"
+              spellcheck="false"
+              autocomplete="off"
+              aria-describedby="cookieHint"
+            ></textarea>
+            <p id="cookieHint" class="field-hint">可本地保存</p>
+          </div>
+
+          <div class="inline-actions">
+            <label class="checkbox-row">
+              <input id="rememberCookie" type="checkbox" />
+              <span id="rememberLabel">记住</span>
+            </label>
+
+            <button id="clearCookieBtn" type="button" class="btn btn-secondary">
+              清除
+            </button>
+          </div>
+
+          <div class="field">
+            <label id="verifyLabel">验证</label>
+            <div id="turnstileBox" class="turnstile-box" aria-live="polite"></div>
+            <p id="verifyHint" class="field-hint">完成后可上传</p>
+          </div>
+
+          <div class="submit-row">
+            <button id="submitBtn" type="submit" class="btn btn-primary" disabled>
+              上传图片
+            </button>
+          </div>
+
+          <div id="statusBar" class="status-bar" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+
+      <section class="panel result-panel" aria-labelledby="resultHeading">
+        <div class="panel-header">
+          <h2 id="resultHeading">结果</h2>
+        </div>
+
+        <div id="emptyState" class="empty-state">暂无结果</div>
+
+        <div id="resultCard" hidden>
+          <div class="result-preview-wrap">
+            <img id="resultImage" alt="" hidden />
+          </div>
+
+          <div class="result-group">
+            <label for="imageUrlOutput" id="urlLabel">直链</label>
+            <textarea id="imageUrlOutput" rows="3" readonly></textarea>
+            <button type="button" class="btn btn-secondary copy-btn" data-copy-target="imageUrlOutput" id="copyUrlBtn">
+              复制直链
+            </button>
+          </div>
+
+          <div class="result-group">
+            <label for="markdownOutput" id="mdLabel">Markdown</label>
+            <textarea id="markdownOutput" rows="3" readonly></textarea>
+            <button type="button" class="btn btn-secondary copy-btn" data-copy-target="markdownOutput" id="copyMdBtn">
+              复制 Markdown
+            </button>
+          </div>
+
+          <a id="openImageLink" class="link-btn" href="#" target="_blank" rel="noopener noreferrer">
+            打开图片
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
 
   <script>
-    const form = document.getElementById('uploadForm');
-    const statusEl = document.getElementById('status');
-    const resultEl = document.getElementById('result');
-    const submitBtn = document.getElementById('submitBtn');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const fileInput = document.getElementById('file');
-      const cookie = document.getElementById('cookie').value.trim();
-      const fakeName = document.getElementById('name').value.trim() || '随便伪装的名.jpg';
-
-      if (!fileInput.files || !fileInput.files[0]) {
-        resultEl.textContent = '请选择文件';
-        resultEl.className = 'result err';
-        return;
-      }
-
-      if (!cookie) {
-        resultEl.textContent = '请填写 Cookie';
-        resultEl.className = 'result err';
-        return;
-      }
-
-      const fd = new FormData();
-      fd.append('file', fileInput.files[0]);
-      fd.append('cookie', cookie);
-      fd.append('name', fakeName);
-
-      submitBtn.disabled = true;
-      statusEl.textContent = '上传中...';
-      resultEl.textContent = '';
-
-      try {
-        const resp = await fetch('/api/upload', {
-          method: 'POST',
-          body: fd,
-        });
-
-        const text = await resp.text();
-
-        statusEl.textContent = `HTTP ${resp.status}`;
-        resultEl.textContent = text;
-        resultEl.className = resp.ok ? 'result ok' : 'result err';
-      } catch (err) {
-        statusEl.textContent = '请求失败';
-        resultEl.textContent = err?.message || String(err);
-        resultEl.className = 'result err';
-      } finally {
-        submitBtn.disabled = false;
-      }
-    });
+    window.onTurnstileLoad = function () {
+      window.__turnstileLoaded = true;
+      window.dispatchEvent(new CustomEvent('turnstile-ready'));
+    };
   </script>
+  <script
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad"
+    async
+    defer
+  ></script>
+  <script src="/assets/app.js" defer></script>
 </body>
 </html>

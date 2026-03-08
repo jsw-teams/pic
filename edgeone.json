@@ -1,0 +1,7 @@
+{
+  "name": "pic",
+  "nodeVersion": "22.11.0",
+  "nodeFunctionsConfig": {
+    "maxDuration": 120
+  }
+}
